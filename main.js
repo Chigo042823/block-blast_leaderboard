@@ -22,7 +22,7 @@ $(document).ready(function () {
                 columns: table_heads,
                 data: table_data,
                 scrollX: true,
-                scrollY: 200,
+                scrollY: '45vh',
                 order: [
                     [3, 'desc']
                 ],
