@@ -10,10 +10,8 @@ $(document).ready(function () {
         .then(function(data) { 
             const text = formatData(data);
             const table_data = getData(text).map(row => {
-                row[4] = 
-                    "<img src='" + 
-                    "https://drive.google.com/thumbnail?id=" + 
-                    row[4] + "'>";
+                // row[4] = 
+                //     "<a href='" + row[4] + "'>" + row[4] + "</a>";
                 return row;
                 });
             const table_heads = getHeadings(text).map(col => ({ title: col }));
@@ -23,6 +21,11 @@ $(document).ready(function () {
                 data: table_data,
                 scrollX: true,
                 scrollY: '45vh',
+                columnDefs: [
+                    {
+                        "className": "dt-center", "targets": "_all"
+                    }
+                  ],
                 order: [
                     [3, 'desc']
                 ],
@@ -55,12 +58,13 @@ $(document).ready(function () {
             let r = row.c;
             var a = [0, 0, 0, 0, 0];
             a[0] = r[0].f;
-            for(i = 1; i < r.length - 1; i++) {
+            for(i = 1; i < r.length; i++) {
                 a[i] = r[i].v
             }
-            a[i] = r[4].v.split("id=")[1];
+            // a[i] = r[4].v.split("id=")[1];
             a.unshift(0);
             a.splice(1, 1);
+            a.splice(4, 4);
             arr.push(a);
         });
         return arr;
@@ -74,5 +78,6 @@ $(document).ready(function () {
         });
         arr.unshift('Rank');
         arr.splice(1, 1);
+        arr.splice(4, 4);
         return arr;
     }
