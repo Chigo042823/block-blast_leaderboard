@@ -13,14 +13,12 @@ $(document).ready(function () {
                 row[4] = 
                     "<img src='" + 
                     "https://drive.google.com/thumbnail?id=" + 
-                    row[4] + "' alt=" +
-                    row[1] + 
-                    "'s score>"
+                    row[4] + "'>";
                 return row;
                 });
             const table_heads = getHeadings(text).map(col => ({ title: col }));
 
-            $('#leaderboard').DataTable({
+            const table =  new DataTable('#leaderboard', {
                 columns: table_heads,
                 data: table_data,
                 scrollX: true,
@@ -30,6 +28,18 @@ $(document).ready(function () {
                 ],
                 dom: "Bfrtip"
             });
+
+            table
+                .on('order.dt search.dt', function () {
+                    let i = 1;
+            
+                    table
+                        .cells(null, 0, { search: 'applied', order: 'applied' })
+                        .every(function (cell) {
+                            this.data(i++);
+                        });
+                })
+                .draw();
         });
     });
 
@@ -49,6 +59,8 @@ $(document).ready(function () {
                 a[i] = r[i].v
             }
             a[i] = r[4].v.split("id=")[1];
+            a.unshift(0);
+            a.splice(1, 1);
             arr.push(a);
         });
         return arr;
@@ -59,6 +71,8 @@ $(document).ready(function () {
         const cols = text.table.cols;
         cols.forEach(col => {
             arr.push(col.label)
-        })
+        });
+        arr.unshift('Rank');
+        arr.splice(1, 1);
         return arr;
     }
