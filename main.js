@@ -1,14 +1,11 @@
-// sheetID you can find in the URL of your spreadsheet after "spreadsheet/d/"
 const spreadsheetId = "14dV7S3zm1IX3bOTpvhstvq4uRwqXjEXpFsuZ0Q_QMuc";
-// sheetName is the name of the TAB in your spreadsheet
 const sheetName = encodeURIComponent("Form Responses 1");
-const sheetURL = `docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?sheet=${sheetName}`;
-const apiURL = 'https://cors-anywhere.herokuapp.com/';
+const sheetURL = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?sheet=${sheetName}`;
+const apiURL = 'https://corsproxy.io/?';
 
 $(document).ready(function () {
-    fetch(apiURL + sheetURL, {
-            'mode': 'cors'
-        })
+    fetch(apiURL + encodeURIComponent(sheetURL)
+        )
         .then((r) => r.text())
         .then(function(data) { 
             const text = formatData(data);
@@ -23,28 +20,11 @@ $(document).ready(function () {
                 });
             const table_heads = getHeadings(text).map(col => ({ title: col }));
 
-            // Initialize DataTables with dynamically loaded data
             $('#leaderboard').DataTable({
                 columns: table_heads,
                 data: table_data,
                 dom: "Bfrtip"
             });
-
-
-            // cols.forEach(col => {
-            //     const header = "<th>" + col + "</th>";
-            //     $("#headers").append(header);
-            // });
-            // rows.forEach(row => {
-            //     var inner = "<tr>"
-            //     inner += "<tr><td>" + row[0] + "</td>";  
-            //     for(i = 1; i < row.length - 1; i++) {
-            //         inner += "<td>" + row[i] + "</td>"
-            //     };
-
-            //     inner += "<td><img src='" + "https://drive.google.com/thumbnail?id=" + row[4] + "' alt=" + row[1] + "'s score></td></tr>"
-            //     $("#leaderboard tbody").append(inner);
-            // });
         });
     });
 
