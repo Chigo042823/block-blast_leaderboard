@@ -23,6 +23,8 @@ $(document).ready(function () {
             $('#leaderboard').DataTable({
                 columns: table_heads,
                 data: table_data,
+                scrollX: true,
+                scrollY: 200,
                 dom: "Bfrtip"
             });
         });
