@@ -25,6 +25,9 @@ $(document).ready(function () {
                 data: table_data,
                 scrollX: true,
                 scrollY: 200,
+                order: [
+                    [3, 'desc']
+                ],
                 dom: "Bfrtip"
             });
         });
